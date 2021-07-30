@@ -4,7 +4,6 @@ namespace Drupal\Tests\Component\Utility;
 
 use Drupal\Component\Utility\Unicode;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 
 /**
  * Test unicode handling features implemented in Unicode component.
@@ -14,17 +13,14 @@ use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
  * @coversDefaultClass \Drupal\Component\Utility\Unicode
  */
 class UnicodeTest extends TestCase {
-  use ExpectDeprecationTrait;
 
   /**
    * Tests multibyte encoding.
    *
    * @dataProvider providerTestMimeHeader
    * @covers ::mimeHeaderEncode
-   * @group legacy
    */
   public function testMimeHeaderEncode($value, $encoded) {
-    $this->expectDeprecation('\Drupal\Component\Utility\Unicode::mimeHeaderEncode() is deprecated in drupal:9.2.0 and is removed from drupal:10.0.0. Use \Symfony\Component\Mime\Header\UnstructuredHeader instead. See https://www.drupal.org/node/3207439');
     $this->assertEquals($encoded, Unicode::mimeHeaderEncode($value));
   }
 
@@ -48,10 +44,8 @@ class UnicodeTest extends TestCase {
    *
    * @dataProvider providerTestMimeHeaderDecode
    * @covers ::mimeHeaderDecode
-   * @group legacy
    */
   public function testMimeHeaderDecode($value, $encoded) {
-    $this->expectDeprecation('\Drupal\Component\Utility\Unicode::mimeHeaderDecode() is deprecated in drupal:9.2.0 and is removed from drupal:10.0.0. Use iconv_mime_decode() instead. See https://www.drupal.org/node/3207439');
     $this->assertEquals($value, Unicode::mimeHeaderDecode($encoded));
   }
 
@@ -105,7 +99,6 @@ class UnicodeTest extends TestCase {
    *   An array containing a string and its uppercase first version.
    */
   public function providerUcfirst() {
-    // cSpell:disable
     return [
       ['tHe QUIcK bRoWn', 'THe QUIcK bRoWn'],
       ['françAIS', 'FrançAIS'],
@@ -114,7 +107,6 @@ class UnicodeTest extends TestCase {
       // A multibyte string.
       ['σion', 'Σion'],
     ];
-    // cSpell:enable
   }
 
   /**
@@ -136,7 +128,6 @@ class UnicodeTest extends TestCase {
    *   An array containing a string and its lowercase version.
    */
   public function providerLcfirst() {
-    // cSpell:disable
     return [
       ['tHe QUIcK bRoWn', 'tHe QUIcK bRoWn'],
       ['FrançAIS is ÜBER-åwesome', 'françAIS is ÜBER-åwesome'],
@@ -145,7 +136,6 @@ class UnicodeTest extends TestCase {
       // Add a multibyte string.
       ['ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΣὨ', 'αΒΓΔΕΖΗΘΙΚΛΜΝΞΟΣὨ'],
     ];
-    // cSpell:enable
   }
 
   /**
@@ -167,7 +157,6 @@ class UnicodeTest extends TestCase {
    *   An array containing a string and its capitalized version.
    */
   public function providerUcwords() {
-    // cSpell:disable
     return [
       ['tHe QUIcK bRoWn', 'THe QUIcK BRoWn'],
       ['françAIS', 'FrançAIS'],
@@ -178,7 +167,6 @@ class UnicodeTest extends TestCase {
       // Add a multibyte string.
       ['σion', 'Σion'],
     ];
-    // cSpell:enable
   }
 
   /**
@@ -205,7 +193,6 @@ class UnicodeTest extends TestCase {
    *     - (optional) Boolean for the $add_ellipsis flag. Defaults to FALSE.
    */
   public function providerTruncate() {
-    // cSpell:disable
     $tests = [
       ['frànçAIS is über-åwesome', 24, 'frànçAIS is über-åwesome'],
       ['frànçAIS is über-åwesome', 23, 'frànçAIS is über-åwesom'],
@@ -252,7 +239,6 @@ class UnicodeTest extends TestCase {
       ['Help! Help! Help!', 3, 'He…', TRUE, TRUE],
       ['Help! Help! Help!', 2, 'H…', TRUE, TRUE],
     ];
-    // cSpell:enable
 
     // Test truncate on text with multiple lines.
     $multi_line = <<<EOF

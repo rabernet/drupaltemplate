@@ -390,7 +390,7 @@ class UrlGeneratorTest extends UnitTestCase {
       ->method('processOutbound');
 
     $path = $this->generator->getPathFromRoute('test_3');
-    $this->assertEquals('test/two', $path);
+    $this->assertEquals($path, 'test/two');
   }
 
   /**
@@ -430,7 +430,7 @@ class UrlGeneratorTest extends UnitTestCase {
   }
 
   /**
-   * Confirms that explicitly setting the base_url works with generated routes.
+   * Confirms that explicitly setting the base_url works with generated routes
    */
   public function testBaseURLGeneration() {
     $options = ['base_url' => 'http://www.example.com:8888'];
@@ -452,8 +452,7 @@ class UrlGeneratorTest extends UnitTestCase {
   }
 
   /**
-   * Tests that the 'scheme' route requirement is respected during url
-   * generation.
+   * Test that the 'scheme' route requirement is respected during url generation.
    */
   public function testUrlGenerationWithHttpsRequirement() {
     $url = $this->generator->generate('test_4', [], TRUE);

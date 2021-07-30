@@ -321,11 +321,7 @@ libraries-override:
         css/views_ui.admin.theme.css: css/views_ui/views_ui.admin.theme.css
         css/views_ui.contextual.css: css/views_ui/views_ui.contextual.css
 
-libraries-extend:
-  tour/tour:
-    - stable9/tour
-
-# Information added by Drupal.org packaging script on 2021-07-21
-version: '9.2.2'
+# Information added by Drupal.org packaging script on 2020-10-07
+version: '9.0.7'
 project: 'drupal'
-datestamp: 1626882440
+datestamp: 1602100097

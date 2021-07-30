@@ -23,7 +23,7 @@ use Drupal\media\MediaTypeInterface;
 use Drupal\media\OEmbed\ResourceFetcherInterface;
 use Drupal\media\OEmbed\UrlResolverInterface;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\TransferException;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -301,7 +301,7 @@ class OEmbed extends MediaSourceBase implements OEmbedInterface {
     $domain = $this->configFactory->get('media.settings')->get('iframe_domain');
     if (!$this->iFrameUrlHelper->isSecure($domain)) {
       array_unshift($form, [
-        '#markup' => '<p>' . $this->t('It is potentially insecure to display oEmbed content in a frame that is served from the same domain as your main Drupal site, as this may allow execution of third-party code. <a href=":url">You can specify a different domain for serving oEmbed content in the Media settings</a>.', [
+        '#markup' => '<p>' . $this->t('It is potentially insecure to display oEmbed content in a frame that is served from the same domain as your main Drupal site, as this may allow execution of third-party code. <a href=":url" target="_blank">You can specify a different domain for serving oEmbed content here</a> (opens in a new window).', [
           ':url' => Url::fromRoute('media.settings')->setAbsolute()->toString(),
         ]) . '</p>',
       ]);
@@ -421,7 +421,7 @@ class OEmbed extends MediaSourceBase implements OEmbedInterface {
         return $local_thumbnail_uri;
       }
     }
-    catch (TransferException $e) {
+    catch (RequestException $e) {
       $this->logger->warning($e->getMessage());
     }
     catch (FileException $e) {
